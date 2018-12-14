@@ -3,19 +3,22 @@
                </div>
          </div>
      </div>
+     <footer class="footer" style="margin: 1% auto;width: 89%;border-top: 1px solid green">
+        <p style="    width: 45%;margin: 10px auto;font-size: 14px; font-family: -webkit-pictograph;"> Mọi thắc mắc về vấn đề kĩ thuật hay phần mềm xin vui lòng liên hệ theo HOTLINE: <strong style="color: red;">12312334</strong></br > hoặc truy cập Fanpage <a href="https://www.facebook.com/marine.thai.1"> MiniGarden Systemm</a> để biết thêm chi tiết .</p>
+      </footer>
    </body>
    <script type="text/javascript">
 $(document).ready(function() {
 // Tao 2 mang chua ten ngay thang
-var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-var dayNames= ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+var monthNames = [ "tháng 1", "tháng 2", "tháng 3", "tháng 4", "tháng 5", "tháng 6", "tháng 7", "tháng 8", "tháng 9", "tháng 10", "tháng 11", "tháng 12" ];
+var dayNames= ["chủ nhật","thứ 2","thứ 3","thú 4","Thứ 5","thứ 6","thứ 7"]
  
 // Tao moi doi tuong Date()
 var newDate = new Date();
 // Lay gia tri thoi gian hien tai
 newDate.setDate(newDate.getDate());
 // Xuat ngay thang, nam
-$('#Date').html(dayNames[newDate.getDay()] + " " + newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear());
+$('#Date').html(dayNames[newDate.getDay()] + " ngày " + newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' năm ' + newDate.getFullYear());
  
 setInterval( function() {
     // lay gia tri giay trong doi tuong Date()
@@ -61,14 +64,15 @@ setInterval( function() {
    }
    .inbody {
       border-radius: 40px;
-      border:1px solid black ;
+      border: 5px solid #689c68;
       width: 75%;
       margin: 0 auto;
+      background-color: #dde4f9;  
    }
    .inbody table {
       border:1px solid black ;
       height: 50%;
-     
+     background-color: #ddf9d1;
    }
    
    .info {
@@ -89,8 +93,8 @@ setInterval( function() {
    .info img {
       margin: 0 auto;
       display: block;
-      width: 70px;
-      height: 55px;
+      width: 60px;
+      height: 50px;
    }
    .inbody2 {
           padding: 8% 12% 0%;
@@ -244,9 +248,11 @@ setInterval( function() {
 }
 
  a:hover {
-  width: 100px;
+  width: 250px;
 }
-
+/* a:hover {
+  width: 100px;
+*/}
 a:hover .logout{
   opacity: .9;
 }
@@ -257,4 +263,98 @@ a:hover .logout{
 
 
    </style>
+<style>
+.info2 {
+  margin-left: 13%;
+  margin-top: 4%;
+  border: none;
+  width: 75%;
+}
+.info2 ul li  {
+  list-style-type: none;
+  font-size:15px;
+  font-weight: bold;
+  font-family: Arial;
+  padding-bottom: 10px;
+}
+.switch {
+  margin-left: 40px;
+ position: relative;
+ display: inline-block;
+ width: 60px;
+ height: 34px;
+}
+.warning {
+    width: 22px !important;
+    height: 25px !important;
+    position: absolute !important;
+    top: 20%;
+    left: 70%;
+    visibility: hidden;
+}
+.warning2 {
+    width: 22px !important;
+    height: 25px !important;
+    position: absolute !important;
+    top: 20%;
+    left: 70%;
+    animation: mymove 2s infinite;
+    @keyframes mymove {
+    from {visibility: hidden;}
+    to {visibility: visible;}
+}
+}
+.switch input { 
+ opacity: 0;
+ width: 0;
+ height: 0;
+}
+
+.slider {
+ position: absolute;
+ cursor: pointer;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background-color: #ccc;
+ -webkit-transition: .4s;
+ transition: .4s;
+}
+
+.slider:before {
+ position: absolute;
+ content: "";
+ height: 26px;
+ width: 26px;
+ left: 4px;
+ bottom: 4px;
+ background-color: white;
+ -webkit-transition: .4s;
+ transition: .4s;
+}
+
+input:checked + .slider {
+ background-color: #667eab/*#2196F3*/;
+}
+
+input:focus + .slider {
+ box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+ -webkit-transform: translateX(26px);
+ -ms-transform: translateX(26px);
+ transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+ border-radius: 34px;
+}
+
+.slider.round:before {
+ border-radius: 50%;
+}
+</style>
 </html>

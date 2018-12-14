@@ -13,7 +13,7 @@
     <title>Login</title>
 
     <!-- Fontfaces CSS-->
-    <link href="template/login/vendor/css/font-face.css" rel="stylesheet" media="all">
+    <link href="template/login/css/font-face.css" rel="stylesheet" media="all">
     <link href="template/login/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
     <link href="template/login/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
     <link href="template/login/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
@@ -29,51 +29,63 @@
     <link href="template/login/vendor/slick/slick.css" rel="stylesheet" media="all">
     <link href="template/login/vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="template/login/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
-
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <!-- Main CSS-->
-    <link href="template/login/vendor/css/theme.css" rel="stylesheet" media="all">
+    <link href="template/login/css/theme.css" rel="stylesheet" media="all">
 
 </head>
+{{-- @if($errors->has('email1') || $errors->has('password1') || Session::has('msg'))
+<script>
+ 
+    $(document).ready(function(){
+    // Show the Modal on load
+    $('#myModal').modal('show')
 
-<body class="animsition">
-    <div class="page-wrapper">
-        <div class="page-content--bge5">
+});
+</script>
+@endif --}}
+<body class="animsition" >
+    <div class="page-wrapper" >
+        <div class="page-content--bge5" style="background: url('/public/file/login.jpg') no-repeat">
             <div class="container">
                 <div class="login-wrap">
-                    <div class="login-content">
+                    <div class="login-content" style="border-radius: 40px;">
                         <div class="login-logo">
-                            <a href="#">
                                 <img src="file/logologin.png" alt="CoolAdmin">
-                            </a>
                         </div>
                         <div class="login-form">
-                            <form action="" method="post">
+                             @if (Session::has('msg'))
+                                <script> alert('{{ Session::get('msg') }}')</script>
+                            @endif
+                            <form action="" method="post" action="{{Route('auth.login')}}">
+                            {{ csrf_field() }}
                                 <div class="form-group">
                                     <label>Tài Khoản</label>
-                                    <input class="au-input au-input--full" type="email" name="email" placeholder="Email">
+                                    <input class="au-input au-input--full" type="text" name="username" id="username" placeholder="Tên đăng nhập" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Mật Khẩu</label>
-                                    <input class="au-input au-input--full" type="password" name="password" placeholder="Password">
+                                    <input class="au-input au-input--full" type="password" name="password" id="password" placeholder="Mật khẩu" required>
                                 </div>
                                 <div class="login-checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember">Nhớ Mật Khẩu
+                                        <a href="#">Quên Mật Khẩu?</a>
                                     </label>
-                                    {{-- <label>
-                                        <a href="#">Forgotten Password?</a>
-                                    </label> --}}
                                 </div>
-                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">Đăng Nhập</button>
+                                <button class="au-btn au-btn--block au-btn--green m-b-20"  style="    border-radius: 10px;" type="submit">Đăng Nhập</button>
+                                 <label>
+                                    Chưa có tài khoản?  <a href="#" data-toggle="modal" data-target="#myModal">Đăng Kí</a>
+                                </label>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
+    @extends('auth.register')  
     <!-- Jquery JS-->
     <script src="template/login/vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
@@ -96,9 +108,80 @@
     </script>
 
     <!-- Main JS-->
-    <script src="js/main.js"></script>
+    <script src="template/login/js/main.js"></script>
 
 </body>
 
 </html>
+{{-- <script type="text/javascript">
+function checknull(){
+
+    var username = document.getElementById("username");
+    console.log(username.value);
+    if(username.value == null)
+    {
+        
+        username.setCustomValidity("Trường này không được để trống");
+    }
+    else
+    {
+         username.setCustomValidity("");
+    }
+}
+    username.onchange = checknull;
+    //username.onkeyup = checknull;
+</script> --}}
 <!-- end document-->
+{{-- <script type="text/javascript">
+        var phone = document.getElementById("username");
+        var email = document.getElementById("password");
+        $(".button").on('click', function(){
+            
+            $.ajax({
+                method: "GET", 
+                async: false,
+                url: "{{ route('public.register.validateRegister') }}", 
+
+            }).done(function(data) {
+            
+            var result = JSON.parse(data);
+            var count = Object.keys(result).length;
+
+            function validateusername(){ //hàm kiểm tra dữ liệu nhập vào đã tồn tại trong database
+                for(var i = 0; i < count; i++){
+                    var obj = result[i];
+                    if(obj.phone == phone.value){
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            function validatepass(){ //hàm kiểm tra dữ liệu nhập vào đã tồn tại trong database
+                for(var i = 0; i < count; i++){
+                    var obj = result[i];
+                    if(obj.email == email.value){
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            if(validatePhone() == true){
+                phone.onchange = validatePhone;
+                phone.onkeyup = validatePhone;
+                phone.setCustomValidity("Số điện thoại '"+phone.value+"' đã được sử dụng"); // in ra đoạn thông báo nếu validateUsername() == true
+            }else{
+                 phone.setCustomValidity("");
+            }
+
+            if(validateEmail() == true){
+                email.onchange = validateEmail;
+                email.onkeyup = validateEmail;
+                email.setCustomValidity("Email '"+email.value+"' đã được sử dụng"); // in ra đoạn thông báo nếu validateUsername() == true
+            }else{
+                 email.setCustomValidity("");
+            }
+        });
+    });
+</script> --}}

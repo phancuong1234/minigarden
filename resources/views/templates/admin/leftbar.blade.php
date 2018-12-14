@@ -16,12 +16,23 @@
                     </a>
                 </li>
                 <li>
-                    <a id="nhansu"  href="{{Route('admin.user.index')}}">
+                    <a id="user"  href="{{Route('admin.user.index')}}">
                         <i class="ti-view-list-alt"></i>
                         <p>Quản Trị User</p>
                     </a>
                 </li>
-               
+                <li>
+                    <a id="plant"  href="{{Route('admin.plant.index')}}">
+                        <i class="ti-view-list-alt"></i>
+                        <p>Thư viên cây trồng</p>
+                    </a>
+                </li>
+                <li>
+                    <a id="plant"  href="{{Route('admin.key.index')}}">
+                        <i class="ti-view-list-alt"></i>
+                        <p>Mã Bản Quyền</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

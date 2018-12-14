@@ -1,5 +1,3 @@
-
-
 @extends('templates.admin.master')
 @section('content')
 <div class="content-wrapper">
@@ -19,7 +17,7 @@
                <p style="color:red">{{ Session::get('error') }}</p>
                @endif
                <div class="panel-body">
-                  <form role="form" action="{{Route('admin.user.add')}}" enctype="multipart/form-data" method="post" class="form">
+                  <form role="form" action="{{Route('admin.user.add')}}" enctype="multipart/form-data" method="post" class="form"  onsubmit="myFunction()">
                      {{ csrf_field() }}
                      <div class="form-group">
                         <label>Tên tài khoản</label>
@@ -47,21 +45,30 @@
                      </div>
                      <div class="form-group">
                         <label>Email</label>
-                        <input class="form-control" type="text" name="email" value="{{ $email}} " />
+                        <input class="form-control" type="text" name="email" value="{{$email}} " />
                         @if($errors->has('email'))
                         <b><font color="red">{{$errors->first('email')}}!</font></b>
                         @endif
                         <p class="help-block"><i style="color:red"></i></p>
                      </div>
+                        <div class="form-group">
+                        <label>Số Lượng Cây</label>
+                        <input class="form-control" type="text" name="numberplant" id="numberplant" value="{{$numberplant}} " />
+                        <p class="help-block"><i style="color:red"></i></p>
+                     </div>
                      <div class="form-group">
                         <label>MAC của thiết bị</label>
-                        <input class="form-control" type="text" name="macaddress" value="{{ $macaddress}} " />
+                        <input class="form-control" type="text" name="macaddress" id="macaddress" value="{{ $macaddress}} " />
                         @if($errors->has('macaddress'))
                         <b><font color="red">{{$errors->first('macaddress')}}!</font></b>
                         @endif
                         <p class="help-block"><i style="color:red"></i></p>
                      </div>
-                     <input type="submit" name="submit" value="Thêm" class="btn btn-info" />
+                     <script> 
+                        $mac = document.getElementById('macaddress').value;
+                        $numb =  document.getElementById('numberplant').value;
+                     </script>
+                     <input type="submit" name="submit" value="Thêm"  class="btn btn-info" />
                   </form>
                </div>
             </div>

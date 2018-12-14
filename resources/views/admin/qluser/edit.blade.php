@@ -27,10 +27,11 @@
 					@endif
 		                        <div class="panel-body">
 		                        @php
-		                        	$id = $danhsach->ID_User;
+		                        	$id = $danhsach->MacAddress;
 		                        @endphp
 		                           	<form role="form" action="{{Route('admin.user.edit',['id' => $id])}}" enctype="multipart/form-data" method="post" class="form">
 		                           	{{ csrf_field() }}
+		                           		<input type="text" hidden="true" name="exp" value={{$danhsach->MacAddress}} >
 		                                        <div class="form-group">
 		                                            <label>Tên Tài Khoản</label>
 		                                            <input class="form-control" type="text" name="username" readonly value="{{$danhsach->Username}}" />
@@ -60,6 +61,14 @@
 		                                            <input class="form-control" type="text" name="email"  value="{{$danhsach->Email}}" />
 		                                            @if($errors->has('email'))
 					                        <b><font color="red">{{$errors->first('email')}}!</font></b>
+					                    @endif
+		                                            <p class="help-block"><i style="color:red"></i></p>
+		                                        </div>
+		                                        <div class="form-group">
+		                                            <label>Số Lượng Cây</label>
+		                                            <input class="form-control" type="text" name="numberplant"  value="{{$danhsach->Number_Bonsai}}" />
+		                                            @if($errors->has('numberplant'))
+					                        <b><font color="red">{{$errors->first('numberplant')}}!</font></b>
 					                    @endif
 		                                            <p class="help-block"><i style="color:red"></i></p>
 		                                        </div>

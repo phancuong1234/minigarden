@@ -32,5 +32,17 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
     <link href="{{url('admin/assets/css/themify-icons.css')}}" rel="stylesheet">
-
+    <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
 </head>
+<script type="text/javascript">
+     var config = {
+    apiKey: "AIzaSyCsw57hA-mjdJWo7oyxL-ZKDZecmGem2Rc",
+    authDomain: "minigardensystem.firebaseapp.com",
+    databaseURL: "https://minigardensystem.firebaseio.com",
+    projectId: "minigardensystem",
+    storageBucket: "minigardensystem.appspot.com",
+    messagingSenderId: "803201866160"
+  };
+  firebase.initializeApp(config);
+  </script>
+

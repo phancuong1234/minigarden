@@ -29,7 +29,8 @@ class UserController extends Controller
         $fullname = "";
         $email = "";
         $macaddress = "";
-    	return view("admin.qluser.add",compact('username','password','fullname','email','macaddress'));
+        $numberplant= "";
+    	return view("admin.qluser.add",compact('username','password','fullname','email','macaddress','numberplant'));
 
     }
     public function postAdd(UserRequest $request){
@@ -39,56 +40,66 @@ class UserController extends Controller
     	$password = $request->password;
     	$fullname = $request->fullname;
     	$email = $request->email;
+        $numberplant = $request->numberplant;
         $macaddress = $request->macaddress;
 
 
         $count = DB::table('users')->where('Username',$username)->orwhere('email',$email)->orwhere('MacAddress',$macaddress)->count();
     	if($count>0){
             $request->session()->flash('error','username , email hoặc địa chỉ Mac đã tồn tại');
-            return view("admin.qluser.add",compact('username','password','fullname','email','macaddress'));
+            return view("admin.qluser.add",compact('username','password','fullname','email','macaddress','numberplant'));
             return redirect()->Route('admin.user.add');
         }
         else {
-            $this->mUser->themUser($username,$password,$email,$fullname,$macaddress);
-            $request->session()->flash('msg','Thêm Thành Công');
-            return redirect()->Route('admin.user.index');
+            $result=$this->mUser->themUser($username,$password,$email,$fullname,$macaddress,$numberplant);
+            if($result){
+                $request->session()->flash('themuser',array('numberplant'=>$numberplant,'macaddress'=>$macaddress));
+                $request->session()->flash('msg','Thêm Thành Công');
+                return redirect()->Route('admin.user.index');
+            }
         }
     	
     }
 
-    public function getEdit($id){
+    public function getEdit($macaddress){
     	// if(!Session::has('username')||Session::get('quyenTruyCap')!=3)
      //        return redirect(url('/'));
-    	$danhsach = $this->mUser->getById($id);
-    	return view("admin.qluser.edit",compact('danhsach','id'));
+    	$danhsach = $this->mUser->getById($macaddress);
+    	return view("admin.qluser.edit",compact('danhsach','macaddress'));
     }
-    public function postEdit(UserRequest $request,$id){
+    public function postEdit(UserRequest $request,$macaddress){
     	// if(!Session::has('username')||Session::get('quyenTruyCap')!=3)
      //        return redirect(url('/'));
-   
+        $macaddress1 = $request->exp;
     	$username = $request->username;
         $password = $request->password;
         $fullname = $request->fullname;
         $email = $request->email;
         $macaddress = $request->macaddress;
-         $count = DB::table('users')->where('Username',$username)->orwhere('email',$email)->orwhere('MacAddress',$macaddress)->count();
+        $numberplant = $request->numberplant;
+        // $macaddress = $request->macaddress;
+        // $count = DB::table('users')->where('Username',$username)->orwhere('email',$email)->orwhere('MacAddress',$macaddress)->count();
         // if($count>1){
         //     $request->session()->flash('error','username , email hoặc địa chỉ Mac đã tồn tại');
         //     return redirect()->Route('admin.user.edit');
         // }
         // else {
-            $this->mUser->suaUser($id,$username,$password,$email,$fullname,$macaddress);
-            $request->session()->flash('msg','Sửa Thành Công');
-            return redirect()->Route('admin.user.index');
+       //
+            $result = $this->mUser->suaUser($username,$password,$email,$fullname,$macaddress,$macaddress1, $numberplant);
+            if($result){
+                $request->session()->flash('suauser',array('numberplant'=>$numberplant,'macaddress'=>$macaddress));
+                $request->session()->flash('msg','Sửa Thành Công');
+                return redirect()->Route('admin.user.index');
+            }
         // }
     }
-
         public function delete($id){
-        	// if(!Session::has('username')||Session::get('quyenTruyCap')!=3)
+            // if(!Session::has('username')||Session::get('quyenTruyCap')!=3)
          //        return redirect(url('/'));
-        	$this->mUser->remove($id);
-        	Session::flash('msg','Xóa Thành Công');
-        	return redirect()->Route('admin.user.index');
+            $result1 = $this->mUser->remove($id);
+            Session::flash('xoauser',$id);
+            Session::flash('msg','Xóa Thành Công');
+            return redirect()->Route('admin.user.index');
         }
 
     // public function search(Request $request){

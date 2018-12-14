@@ -7,7 +7,7 @@
                <div class="col-md-12"> 
                     <div class="card">
                         <div class="header">
-                            <h4 class="title">Danh sách Đơn Vị </h4>
+                            <h4 class="title">Danh sách người dùng </h4>
                             @if (Session::has('msg'))
                                 <script> alert('{{ Session::get('msg') }}')</script>
                             @endif
@@ -49,9 +49,10 @@
                                     <thead>
                                         <tr>
                                             <th width="15%">Username</th>
-                                            <th width="25%">Fullname</th>
-                                            <th width="25%">Email</th>
-                                            <th width="15%">MacAddress</th>                                         
+                                            <th width="15%">Tên đầy đủ</th>
+                                            <th width="15%">Email</th>
+                                            <th width="15%">Số lượng cây</th>      
+                                            <th width="20%">Địa chỉ mac của thiết bị</th>                                         
                                             <th width="20%">Chức năng</th>
                                         </tr>
                                     </thead>
@@ -61,10 +62,11 @@
                                                 <td>{{$ds->Username}}</td>
                                                 <td>{{$ds->Fullname}}</td>
                                                 <td>{{$ds->Email}}</td>
+                                                <td>{{$ds->Number_Bonsai}}</td>
                                                 <td>{{$ds->MacAddress}}</td>
                                                 <td align="center">
-                                                    <a href="{{Route('admin.user.edit',['id' =>$ds->ID_User])}}" class="btn btn-primary">Sửa</a>
-                                                    <a href="{{Route('admin.user.delete',['id' => $ds->ID_User])}}" class="btn btn-danger">Xóa</a>
+                                                    <a href="{{Route('admin.user.edit',['id' =>$ds->MacAddress])}}" class="btn btn-primary">Sửa</a>
+                                                    <a href="{{Route('admin.user.delete',['id' => $ds->MacAddress])}}" class="btn btn-danger">Xóa</a>
                                                 </td>       
                                         </tr>
                                         @endforeach
@@ -84,5 +86,56 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    var them = "{{session()->has('themuser')}}";
+    var sua = "{{session()->has('suauser')}}" ;
+    var xoa = "{{session()->has('xoauser')}}" ;
+    if(them == 1){
+        themuser();
+    }
+    if(sua == 1 ){
+        suauser();
+    }
+     if(xoa == 1 ){
+        xoauser();
+    }
+  function themuser(){
+     firebase.database().ref('id/{{session()->get('themuser')['macaddress']}}').set({
+        autovalue :{
+            anhsang: "0",
+            doam: "0",
+            nhietdo: "0"
+        },
+        devices :{
+            den: "0",
+            maybom: "0",
+            quat: "0",
+            rem: "0",
+        },
+        mode :{
+            automode: "1"
+        },
+        sensor: {
+            anhsang: "0",
+            doam: {
+                doam1: "0"
+            },
+            nhietdo: "0"
+        },
+        soluongcay: {
+            soluong : "{{session()->get('themuser')['numberplant']}}"
+        }
+        ,
+        vitri: {
+            cay: "1"
+        }
+  });
+  }
+  function suauser(){
+      firebase.database().ref('id/{{session()->get('suauser')['macaddress']}}/soluongcay/').update({soluong:"{{session()->get('suauser')['numberplant']}}"});
+  }
+  function xoauser(){
+     firebase.database().ref('id/').child('{{session()->get('xoauser')}}').remove();
+  }
+</script>
 @stop
